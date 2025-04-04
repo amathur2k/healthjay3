@@ -41,8 +41,80 @@ async function example() {
   }
 }
 
-// Export the function for use in other modules
-module.exports = { callLLM };
+/**
+ * Analyzes the sentiment of the provided text using Gemini 2.0
+ * 
+ * @param {string} text - The text to analyze for sentiment
+ * @returns {Promise<Object>} - An object containing sentiment analysis results
+ */
+async function analyzeSentiment(text) {
+  try {
+    // Get the Gemini 2.0 Pro model
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.0-flash-lite",
+    });
+
+    // Create a prompt that asks for sentiment analysis
+    const prompt = `
+      Analyze the sentiment of the following text and provide a structured response.
+      Determine if the sentiment is positive, negative, or neutral.
+      Also provide a confidence score (0-1) and identify key emotional tones.
+      Format the response as a JSON object with the following structure:
+      {
+        "sentiment": "positive|negative|neutral",
+        "confidence": 0.XX,
+        "emotionalTones": ["tone1", "tone2", ...],
+        "summary": "A brief one-sentence summary of the sentiment analysis"
+      }
+
+      Text to analyze: "${text}"
+      
+      JSON response:
+    `;
+
+    // Generate content with the sentiment analysis prompt
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const responseText = response.text();
+    
+    // Parse the JSON response
+    try {
+      // Find JSON in the response (in case the model adds extra text)
+      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        return JSON.parse(jsonMatch[0]);
+      }
+      // If no JSON pattern found, try parsing the whole response
+      return JSON.parse(responseText);
+    } catch (parseError) {
+      console.error('Error parsing sentiment response:', parseError);
+      // Return a simplified response with the raw text
+      return {
+        sentiment: 'unknown',
+        confidence: 0,
+        emotionalTones: [],
+        summary: 'Failed to parse sentiment',
+        rawResponse: responseText
+      };
+    }
+  } catch (error) {
+    console.error('Error analyzing sentiment:', error);
+    throw error;
+  }
+}
+
+// Example usage of sentiment analysis
+async function sentimentExample() {
+  try {
+    const sentiment = await analyzeSentiment("I'm really happy with the excellent service I received today!");
+    console.log("Sentiment Analysis:", sentiment);
+  } catch (error) {
+    console.error("Failed to analyze sentiment:", error);
+  }
+}
+
+// Export the functions for use in other modules
+module.exports = { callLLM, analyzeSentiment };
 
 // Uncomment to run the example
 // example();
