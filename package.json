@@ -1,0 +1,13 @@
+{
+  "name": "llm-caller",
+  "version": "1.0.0",
+  "description": "A simple Node.js script to call Gemini 2.0 Pro LLM",
+  "main": "llmService.js",
+  "scripts": {
+    "start": "node llmService.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.2.0",
+    "dotenv": "^16.3.1"
+  }
+}
