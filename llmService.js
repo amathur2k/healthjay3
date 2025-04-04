@@ -57,14 +57,14 @@ async function analyzeSentiment(text) {
     // Create a prompt that asks for sentiment analysis
     const prompt = `
       Analyze the sentiment of the following text and provide a structured response.
-      Determine if the sentiment is positive, negative, or neutral.
+      The text involves responses from a health wellness survey. Your job is to assses if the user is feeling well, ok or not well
+      For a user doing well or OK, the sentiment should be Thumbs Up, and for a user not well, the sentiment should be Thumbs Down
       Also provide a confidence score (0-1) and identify key emotional tones.
       Format the response as a JSON object with the following structure:
       {
-        "sentiment": "positive|negative|neutral",
+        "sentiment": "Thumbs Up|Thumbs Down",
         "confidence": 0.XX,
-        "emotionalTones": ["tone1", "tone2", ...],
-        "summary": "A brief one-sentence summary of the sentiment analysis"
+
       }
 
       Text to analyze: "${text}"

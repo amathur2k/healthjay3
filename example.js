@@ -13,31 +13,44 @@ async function main() {
     console.log("\nResponse from LLM:");
     console.log(response);
 
-    // Example 2: Analyze sentiment
-    console.log("\n\n===== EXAMPLE 2: SENTIMENT ANALYSIS =====\n");
-    const textToAnalyze = "The new product exceeded all my expectations. It's incredibly user-friendly and solved my problem immediately. I'm thrilled with my purchase!";
+    // Example 2: Analyze wellness survey response - Positive
+    console.log("\n\n===== EXAMPLE 2: WELLNESS SURVEY - POSITIVE RESPONSE =====\n");
+    const positiveWellnessResponse = "I've been feeling great this week. My energy levels are high, I'm sleeping well, and I've been able to exercise regularly. My stress levels are manageable and I've been in a good mood overall.";
     
-    console.log("Text to analyze:");
-    console.log(textToAnalyze);
-    console.log("\nAnalyzing sentiment...");
+    console.log("Survey response to analyze:");
+    console.log(positiveWellnessResponse);
+    console.log("\nAnalyzing wellness sentiment...");
     
-    const sentimentResult = await analyzeSentiment(textToAnalyze);
+    const positiveResult = await analyzeSentiment(positiveWellnessResponse);
     
-    console.log("\nSentiment Analysis Result:");
-    console.log(JSON.stringify(sentimentResult, null, 2));
+    console.log("\nWellness Analysis Result:");
+    console.log(JSON.stringify(positiveResult, null, 2));
 
-    // Example 3: Analyze negative sentiment
-    console.log("\n\n===== EXAMPLE 3: NEGATIVE SENTIMENT ANALYSIS =====\n");
-    const negativeText = "This service was terrible. I waited for hours and the staff was rude. I will never use this company again.";
+    // Example 3: Analyze wellness survey response - Negative
+    console.log("\n\n===== EXAMPLE 3: WELLNESS SURVEY - NEGATIVE RESPONSE =====\n");
+    const negativeWellnessResponse = "I've been feeling terrible this week. I'm constantly tired, having trouble sleeping, and haven't had the energy to exercise. My stress levels are very high, and I've been feeling anxious and down most days.";
     
-    console.log("Text to analyze:");
-    console.log(negativeText);
-    console.log("\nAnalyzing sentiment...");
+    console.log("Survey response to analyze:");
+    console.log(negativeWellnessResponse);
+    console.log("\nAnalyzing wellness sentiment...");
     
-    const negativeSentiment = await analyzeSentiment(negativeText);
+    const negativeResult = await analyzeSentiment(negativeWellnessResponse);
     
-    console.log("\nSentiment Analysis Result:");
-    console.log(JSON.stringify(negativeSentiment, null, 2));
+    console.log("\nWellness Analysis Result:");
+    console.log(JSON.stringify(negativeResult, null, 2));
+
+    // Example 4: Analyze wellness survey response - Mixed/Neutral
+    console.log("\n\n===== EXAMPLE 4: WELLNESS SURVEY - MIXED RESPONSE =====\n");
+    const mixedWellnessResponse = "My week has been okay. Some days I feel good and have energy, but other days I feel tired. My sleep has been inconsistent. I've managed to exercise twice this week. My stress levels are moderate.";
+    
+    console.log("Survey response to analyze:");
+    console.log(mixedWellnessResponse);
+    console.log("\nAnalyzing wellness sentiment...");
+    
+    const mixedResult = await analyzeSentiment(mixedWellnessResponse);
+    
+    console.log("\nWellness Analysis Result:");
+    console.log(JSON.stringify(mixedResult, null, 2));
   } catch (error) {
     console.error("Error occurred:", error.message);
   }
